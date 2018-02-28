@@ -1,0 +1,41 @@
+<div class="menu" ng-controller="IngresoCrtl" >
+    <div class="menu-section">
+       <form class="form-horizontal" ng-submit="submitStudnetForm()" role="form" name="formRegistrarUsuario">
+            <div class="form-group">
+                <label for="nu_nombre" class="col-sm-3 control-label">Nombre</label>
+                <div class="col-sm-6">
+                    <input type="text" id="nu_nombre" name="nu_nombre" class="form-control" ng-model="nuevoUsuario.nu_nombre" />
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="nu_apellido" class="col-sm-3 control-label">Apellido</label>
+                <div class="col-sm-6">
+                    <input type="text" id="nu_apellido" name="nu_apellido" class="form-control" ng-model="nuevoUsuario.nu_apellido" />
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="nu_email" class="col-sm-3 control-label">Correo electrónico</label>
+                <div class="col-sm-6">
+                    <input type="text" id="nu_email" name="nu_email" class="form-control" ng-model="nuevoUsuario.nu_email" />
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+
+            <div class="form-group">
+                <label for="nu_password" class="col-sm-3 control-label">Contraseña</label>
+                <div class="col-sm-6">
+                    <input type="text" id="nu_password" name="nu_password" class="form-control" ng-model="nuevoUsuario.nu_password" />
+                </div>
+                <div class="col-sm-3"></div>
+            </div>
+            <!-- <input type="submit" value="Save" class="btn btn-primary col-sm-offset-3" /> -->
+            <button class="btn btn-primary" type="button" ng-click="aceptar(data.seleccion)" ng-disabled="!formEspecificaciones.$valid" >Registrarme</button>
+
+            <button class="btn btn-danger" type="button" ng-click="cancelar()">Cancelar</button>
+        </form>
+    </div>
+</div>

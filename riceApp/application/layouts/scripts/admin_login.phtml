@@ -1,0 +1,40 @@
+<?php $app = Zend_Registry::get("appData"); ?>
+<!DOCTYPE html>
+<html lang="es-cl">
+	<head>
+		<meta charset="utf-8">
+		<title>  <?php echo $app["name"] ?></title>
+		<meta name="description" content="">
+		<meta name="author" content="">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+		<link rel="stylesheet" type="text/css" media="screen" href="/css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/css/font-awesome.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/css/smartadmin-production-plugins.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/css/smartadmin-production.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/css/smartadmin-skins.min.css">
+		<link rel="stylesheet" type="text/css" media="screen" href="/css/smartadmin-rtl.min.css"> 
+		<link rel="stylesheet" type="text/css" media="screen" href="/css/demo.min.css">
+		<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,300,400,700">
+
+		<link rel="shortcut icon" href="<?php echo $app['favicon'] ?>" type="image/x-icon">
+		<link rel="icon" href="<?php echo $app['favicon'] ?>" type="image/x-icon">
+		
+	</head>
+	
+	<body class="animated fadeInDown">
+		<header id="header"></header>
+		<div id="main" role="main">
+            <?php echo $this->layout()->content; ?>
+		</div>
+		<script src="/js/plugin/pace/pace.min.js"></script>
+	    <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script> if (!window.jQuery) { document.write('<script src="js/libs/jquery-2.1.1.min.js"><\/script>');} </script>
+	    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script> if (!window.jQuery.ui) { document.write('<script src="js/libs/jquery-ui-1.10.3.min.js"><\/script>');} </script>
+		<script src="/js/bootstrap/bootstrap.min.js"></script>
+		<script src="/js/plugin/jquery-validate/jquery.validate.min.js"></script>
+		<script src="/js/plugin/masked-input/jquery.maskedinput.min.js"></script>
+		<script src="/js/login.js"></script>
+
+	</body>
+</html>

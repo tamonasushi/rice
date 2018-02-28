@@ -1,0 +1,164 @@
+<div class="menu-section" ng-controller="PerfilCrtl" >
+       <form class="form-horizontal" ng-submit="editarPerfil()" role="form" name="formEditarPerfil">
+            <div class="container-fluid">
+                <div class="row padding-top-row-modal" >
+                <div class="col-md-1 "></div>
+                    <div class="col-md-5 ">
+                        <div class="container">
+                            <div class="row flex-parent">
+                                <div class="col-sm-1 flex-child">
+                                    <span class="glyphicon glyphicon glyphicon-user fa-2x modal-titulo-icon"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                   <span class="titulo-modal">Mis datos</span>
+                                </div>
+                            </div>
+                            <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"></div></div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="email"  class="col-sm-3 control-label">Correo electrónico</label>
+                            <div class="col-sm-8">
+                                <input type="email" id="email" disabled name="email" class="form-control" ng-model="email" required/>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre" class="col-sm-3 control-label">Nombre</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="nombre" name="nombre" class="form-control" ng-model="nombre" required/>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido" class="col-sm-3 control-label">Apellidos</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="apellido" name="apellido" class="form-control" ng-model="apellido" required/>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono" class="col-sm-3 control-label">Celular</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="telefono" name="telefono" class="form-control" ng-model="telefono" required/>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <br><br>
+                        <div class="form-group">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-8">
+                               <input type="submit" value="Guardar cambios" ng-disabled="!formEditarPerfil.$valid" class="btn btn-primary btn-lg btn-block" /> 
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="container">
+                            <div class="row flex-parent">
+                                <div class="col-sm-1 flex-child">
+                                    <span class="glyphicon glyphicon glyphicon-home fa-2x modal-titulo-icon"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                   <span class="titulo-modal">Mis direcciones</span>
+                                </div>
+                            </div>
+                            <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"></div></div>
+                        </div>
+                        <br>
+                        <div class="modal-personalizado">
+                            <div class="container-fluid">
+                                <div class="quiz row" ng-repeat="direccion in direcciones" id="quiz" >
+                                    <div class="container-fluid" style="margin-bottom:15px">
+                                        <div class="col-md-11 quiz" data-toggle="buttons"> 
+                                            <label class="element-animation1 btn btndelete btn-lg btn-secondary btn-block" ng-click="eliminar(direccion.id)"><span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>
+                                            <input type="radio"  name="q_answer" value="1">{{direccion.descripcion}}</label>
+                                        </div>
+                                         
+                                    </div>
+                                </div>
+
+                                <br><br>
+                                <div class="form-group">
+                                    <div class="col-md-11">
+                                        <button class="btn btn-md btn-success btn-block" type="button" ng-click="nuevaDireccion()">
+                                            <h3>Agregar dirección</h3>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </form>  
+</div>
+
+
+<script type="text/ng-template" id="formNuevaDireccion.html" >
+    <div class="container-fluid menu-section container-modal borde-modal">
+       <form class="form-horizontal" ng-submit="aceptar()" role="form" name="formNuevaDireccion">
+            <div class="container-fluid">
+                <div class="row padding-top-row-modal" >
+                    <div class="col-md-11 ">
+                        <div class="container">
+                            <div class="row flex-parent">
+                                <div class="col-sm-1 flex-child">
+                                    <span class="glyphicon glyphicon glyphicon-home fa-2x modal-titulo-icon"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                   <span class="titulo-modal">Agregar dirección</span>
+                                </div>
+                            </div>
+                            <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"></div></div>
+                        </div>
+                        <br>
+         
+                        <div class="form-group">
+                            <label for="dirSector" class="col-sm-3 control-label">Sector</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="dirSector" id="dirSector" ng-model="clienteDireccion.dirSector" required>
+                                  <option ng-repeat="data in registroCliente.sectores" value="{{data.id}}">{{data.descripcion}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dirCalle" class="col-sm-3 control-label">Calle</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="dirCalle" name="dirCalle" class="form-control" ng-model="clienteDireccion.dirCalle" />
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dirNumero" class="col-sm-3 control-label">Número</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="dirNumero" name="dirNumero" class="form-control" ng-model="clienteDireccion.dirNumero" />
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="dirDetalle" class="col-sm-3 control-label">Block/ Depto</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="dirDetalle" name="dirDetalle" class="form-control" ng-model="clienteDireccion.dirDetalle" />
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>                                
+                    </div>
+                </div>
+                <div class="row flex-parent padding-fila-btn">
+                    <div class="col-md-6 "></div>
+                    <div class="col-md-3 ">
+                        <input type="submit" value="Guardar" ng-disabled="!formNuevaDireccion.$valid" class="btn btn-primary btn-lg" /> 
+                    </div>
+                    <div class="col-md-3 ">
+                        <button class="btn btn-danger boton-modal  btn-lg"  type="button" ng-click="cancelar()">CANCELAR</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>

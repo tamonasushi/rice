@@ -1,0 +1,20 @@
+<VirtualHost *:80>
+    ServerAdmin victor.llanten@gmail.com
+    DocumentRoot "/var/www/html/rice_trunk/riceApp/public"
+    DirectoryIndex index.php
+    ServerName dev.rice.cl
+    ServerAlias dev.rice.cl
+    SetEnv APPLICATION_ENV development
+    <Directory "/var/www/html/rice_trunk/riceApp/public">
+        Options All
+        AllowOverride All
+        Allow from all
+    </Directory>
+    <Files ~ ".ini$">
+        Order allow,deny
+        Deny from all
+    </Files>
+
+  CustomLog "/var/log/dev.rice.cl-access.log" deflate env=!dontlog
+  ErrorLog "/var/log/dev.rice.cl-error.log"
+</VirtualHost>

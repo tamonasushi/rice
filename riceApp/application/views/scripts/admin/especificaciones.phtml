@@ -1,0 +1,81 @@
+<div ng-controller="EspecificacionesCrtl">
+
+	<ol class="breadcrumb">
+		<li>Administración</li>
+		<li>Especificaciones</li>
+	</ol>
+	
+	<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+		<div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable " role="widget">
+			<header role="heading">
+				<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+				<h2>Listado de especificaciones </h2>
+			</header>
+			<div role="content" class="contentTable">
+				<div align="right">
+					<button class="btn btn-primary" ng-click="nuevo()" ><i class="fa fa-plus"></i>Nuevo</button>
+				</div>
+				<table ng-table="tableParams" class="table table-striped table-bordered table-hover dataTable no-footer" show-filter="true">
+					<tr ng-repeat="(k,row) in $data">
+						<td title="'Descripcion'" filter="{ descripcion: 'text'}" sortable="'descripcion'">{{row.descripcion}}</td>
+						<td title="'Valor'" filter="{ valor: 'text'}" sortable="'valor'">{{row.valor}}</td>
+						<td title="'Activo'" align="center">
+							<span ng-if="row.activo == 1" class="label label-success">SI</span>
+							<span ng-if="row.activo != 1" class="label label-danger">NO</span>
+						</td>
+						<td title="'Acciones'" align="center">
+							<button ng-if="row.activo != 1" class="btn btn-success" title="Activar" ng-click="statusChange('Activar',row.id)"> <i class="fa fa-check"></i> </button>
+							<button ng-if="row.activo == 1" class="btn btn-danger" title="Desactivar" ng-click="statusChange('Desactivar',row.id)"> <i class="fa fa-times"></i> </button>
+							<button class="btn btn-warning" title="Editar"  ng-click="editar(row.id)"> <i class="fa fa-edit"></i> </button>
+						</td>
+					</tr>
+				</table>
+
+			</div>
+		</div>
+
+	</article>
+</div>
+
+<script type="text/ng-template" id="editarEspecificacion.html">
+
+	<div class="modal-header">
+		<h3 class="modal-title" id="modal-title">
+  			Gestion de especificacion
+		</h3>
+	</div>
+	<div class="modal-body" id="modal-body">
+		<form class="smart-form" name="formEspecificaciones">
+			<fieldset>
+				<section>
+					<label class="label">Descripcion:</label>
+					<label class="input">
+						<input type="text" ng-model="data.especificacion.descripcion" required>
+					</label>
+				</section>
+			</fieldset>
+			<fieldset>
+				<section>
+					<label class="label">Valor:</label>
+					<label class="input">
+						<input type="number" ng-model="data.especificacion.valor" required>
+					</label>
+				</section>
+			</fieldset>
+			<fieldset>
+				<section>
+				<label class="label">Status:</label>
+					<label class="checkbox">
+						<input type="checkbox" name="checkbox" ng-model="data.especificacion.activo" >
+						<i></i>Activo
+					</label>
+				</section>
+			</fieldset>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button class="btn btn-primary" type="button" ng-click="aceptar(data)" ng-disabled="!formEspecificaciones.$valid" >Continuar</button>
+		<button class="btn btn-warning" type="button" ng-click="cancelar()">Cancelar</button>
+	</div>
+
+</script>

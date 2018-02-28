@@ -1,0 +1,542 @@
+<div class="menu" ng-controller="MenuCrtl" >
+    <div id="menu" class="menu-section">
+        <div class="container">
+            <div class="col-md-1"></div>
+            <div id="accordion" class="col-md-10" role="tablist" aria-multiselectable="false">
+                <div class="card" ng-repeat="(key, cat) in categorias track by $index">
+                    <div class="card-header" role="tab" id="heading{{$index}}">
+                        <h5 class="mb-0">
+                            <a data-toggle="collapse" class="btn btn-lg btn-block btn-secondary" data-parent="#accordion" href="#collapse{{$index}}" aria-expanded="true" aria-controls="collapse{{$index}}">
+                            {{cat.descripcion}}
+                            </a>
+                        </h5>
+                    </div>
+                    <div id="collapse{{$index}}" class="collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
+                        <div class="card-block">
+
+                            <div class="menus-section">
+                            
+                                <div class="container text-center">
+                                    <div class="featured col-md-10">
+                                        <div style="padding-left: 0;" class="media-wrapper row">
+                                            <div ng-if="productos[cat.id]">
+                                                <div class="col-xs-13 col-sm-4" ng-repeat="(key, pro) in productos[cat.id]">
+                                                    <div class="media-item" title="Agregar al carro" ng-click="AddItemToCart(pro)">
+                                                        <div class="media-item-inner">
+                                                            <img class="img-responsive" ng-src="{{pro.img}}" alt="">
+                                                            <a class="mask" href="{{pro.img}}" data-gallery>
+                                                                <span class="mask-inner">
+                                                                    <span class="item-title script">{{pro.nombre}}</span>
+                                                                    <span class="desc">{{pro.descripcion}}</span>
+                                                                    <span class="price">{{pro.valor | currency:"$":0 }}</span>
+                                                                </span>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div ng-if="!productos[cat.id]">
+                                                <div class="col-rigth">
+                                                    <span> - Sin productos en la categoria - </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+            
+                </div>
+
+               <div class="text-center" ng-if="rcCarrito.nElementsCarro">
+                   <button class="btn btn-success btn-lg btn-block" ng-click="confirmarCompra()">
+                       <!--<span style="text-align:left;float:left;">Confirmar compra</span>-->
+                       <span>Confirmar compra</span>
+                   </button>
+               </div>
+                
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+    </div>
+    <div class="logoCarro" ng-if="rcCarrito.nElementsCarro > 0" title="Confirmar compra">
+        <a ng-click="confirmarCompra()" style='cursor:pointer'>
+            <i class="fa fa-shopping-cart fa-3x" style="color: #fff;"></i>
+            <span class="badge"  style="background-color: #b94a48">+{{rcCarrito.nElementsCarro}}</span>
+        </a>
+    </div>
+</div>
+
+<script type="text/ng-template" id="seleccionEspecificacion.html">
+    <div class="container-fluid menu-section container-modal borde-modal"> 
+    <div class="row padding-top-row-modal" >
+        <div class="container">
+            <div class="row flex-parent">
+                <div class="col-sm-1"></div>
+                <div class="col-sm-1 flex-child">
+                    <span class="glyphicon glyphicon-th-list fa-2x modal-titulo-icon"></span>
+                </div>
+                <div class="col-sm-10">
+                    <span class="titulo-modal">Selección de especificación</span>
+                </div>
+            </div>
+            <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"></div></div>
+        </div>
+    </div>
+    <div class="row padding-top-row-modal" ><div class="col-md-12"></div></div>
+    <div class="row padding-top-row-modal" ><div class="col-md-12"></div></div>
+    <div class="row " >
+        <div class="col-md-1 "></div>
+        <div class="col-md-10">
+            <div class="quiz" id="quiz" data-toggle="buttons">
+                <label class="element-animation1 btn btn-lg btn-primary btn-block" ng-repeat="(key, esp) in data.especificaciones" ng-click="seleccionarOpc(esp.id)"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="q_answer" value="{{esp.id}}">{{esp.descripcion}} <span style="float:right;" class="price">{{esp.valor | currency:"$":0}}</span>
+                </label>
+           </div>
+        </div>
+        <div class="col-md-1 "></div>
+    </div>
+    <div class="row padding-top-row-modal" ><div class="col-md-12"></div></div>
+    <div class="row flex-parent padding-fila-btn">
+        <div class="col-md-6 "></div>
+        <div class="col-md-3 ">
+            <button class="btn btn-primary btn-lg" type="button" ng-click="aceptar(data.seleccion)" ng-disabled="data.seleccion == null" >Continuar</button>
+        </div>
+        <div class="col-md-3 ">
+            <button class="btn btn-danger btn-lg" type="button" ng-click="cancelar()">Cancelar</button>
+        </div>
+    </div>
+
+    <div class="row padding-top-row-modal" ><div class="col-md-12"></div></div>
+</script>
+
+<script type="text/ng-template" id="resumen.html" >
+    <div class="container-fluid menu-section container-modal borde-modal">
+        <div class="row padding-top-row-modal" >
+            <div class="col-md-11 ">
+                <div class="container">
+                    <div class="row flex-parent">
+                        <div class="col-sm-1 flex-child">
+                            <span class="glyphicon glyphicon glyphicon-shopping-cart fa-2x modal-titulo-icon"></span>
+                        </div>
+                        <div class="col-sm-6">
+                           <span class="titulo-modal">Resumen de la compra</span>
+                        </div>
+                    </div>
+                    <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"></div></div>
+                </div>
+                <br>
+            </div>
+        </div>
+        <div class="row" >
+            <div class="container-fluid">
+                <div ng-repeat="(key, p) in rcCarrito.itemsCarro" class="card" >
+                   <div class="card-block">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-7">
+                                    <h3 class="card-title">{{p.nombre}}</h3>
+                                    <p class="card-text">{{p.descripcion}} ( {{p.nombreEspecificacion}} )</p>
+                                </div>
+                                <div class="col-md-3 columna-lista-modal padding-top-botnera-modal">
+                                    <button class="btn btn-danger boton-modal  btn-md"  type="button" ng-click="rcCarrito.restarItem(key)"><span class="glyphicon glyphicon-minus fa-btn-size"></button>
+                                    <span class="cantidad">{{p.cantidad}}</span>
+                                    <button class="btn btn-danger boton-modal  btn-md"  type="button" ng-click="rcCarrito.sumarItem(key)"><span class="glyphicon glyphicon-plus fa-btn-size"></button>
+
+                                    <button class="btn btn-danger boton-modal  btn-md"  type="button" ng-click="rcCarrito.eliminarItem(key)"><span class="glyphicon glyphicon-trash fa-btn-size"></button>
+                                </div>
+                                <div class="col-md-2"><h3>{{p.valor * p.cantidad + p.precioEspecificacion * p.cantidad | currency:"$":0}} </h3></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" ng-if="rcCarrito.precioTotal > 0">
+                    <div class="col-md-12">
+                        <h2>TOTAL A PAGAR:  {{rcCarrito.precioTotal | currency:"$":0}}</h2>
+                    </div>
+                </div>
+                <div class="row" ng-if="rcCarrito.precioTotal == 0">
+                    <div class="col-md-12">
+                        <p>Sin productos</p>
+                    </div>
+                </div>
+                <div class="row flex-parent padding-fila-btn">
+                    <div class="col-md-6 "></div>
+                    <div class="col-md-3 ">
+                        <button class="btn btn-primary btn-lg" type="button" ng-click="enviarPedido(data.seleccion)" ng-disabled="!rcCarrito.nElementsCarro || rcCarrito.nElementsCarro == 0"  >Continuar</button>
+                    </div>
+                    <div class="col-md-3 ">
+                        <button class="btn btn-danger btn-lg btn-block" type="button" ng-click="cancelar()">CANCELAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script type="text/ng-template" id="formLoginCliente.html" >
+    <div class="container-fluid menu-section container-modal borde-modal">
+       <!--<form class="form-horizontal" ng-submit="rcLoginCliente.submitLoginForm()" role="form" name="formLoginCliente">-->
+       <form class="form-horizontal" ng-submit="submitLoginForm()" role="form" name="formLoginCliente">
+            <div class="container-fluid">
+                <div class="row padding-top-row-modal" >
+                    <div class="col-md-12 ">
+                        <div class="container">
+                            <div class="row flex-parent">
+                                <div class="col-sm-1 flex-child">
+                                    <span class="glyphicon glyphicon glyphicon-user fa-2x modal-titulo-icon"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span class="titulo-modal">Ingresar</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group padding-top-row-modal">
+                            <label for="nu_email" class="col-sm-3 control-label">Correo electrónico</label>
+                            <div class="col-sm-6">
+                                <input type="email" id="nu_email" name="nu_email" class="form-control" ng-model="rcLoginCliente.loginEmail" required />
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nu_password" class="col-sm-3 control-label">Contraseña</label>
+                            <div class="col-sm-6">
+                                <input type="password" id="nu_password" name="nu_password" class="form-control" ng-model="rcLoginCliente.loginPassword" required />
+                            </div>
+                            <div class="col-sm-3"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row flex-parent padding-fila-btn">
+                    <div class="col-md-3 "></div>
+                    <div class="col-md-3 ">
+                        <input type="submit" value="INGRESAR" ng-disabled="!formLoginCliente.$valid" class="btn btn-primary btn-lg" /> 
+                    </div>
+
+                    <div class="col-md-3 ">
+                        <button class="btn btn-secondary boton-modal  btn-lg" type="button" ng-click="registrarCliente()" >Registrarme</button>
+                    </div>
+                  
+                    <div class="col-md-3 ">
+                        <button class="btn btn-danger boton-modal  btn-lg"  type="button" ng-click="cancelar()">CANCELAR</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="formRegistroCliente.html" >
+    <div class="container-fluid menu-section container-modal borde-modal">
+       <form class="form-horizontal" ng-submit="submitRegistroForm()" role="form" name="formRegistroCliente">
+            <div class="container-fluid">
+                <div class="row padding-top-row-modal" >
+                    <div class="col-md-6 ">
+                        <div class="container">
+                            <div class="row flex-parent">
+                                <div class="col-sm-1 flex-child">
+                                    <span class="glyphicon glyphicon glyphicon-user fa-2x modal-titulo-icon"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span class="titulo-modal">Mis datos</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="reg_email" class="col-sm-3 control-label">Correo electrónico</label>
+                            <div class="col-sm-8">
+                                <input type="email" id="reg_email" name="reg_email" class="form-control" ng-model="registroCliente.rEmail" />
+                            </div>
+                            <div class="col-sm-1"></div>
+
+                        </div>
+                        <div class="form-group">
+                            <label for="reg_nombre" class="col-sm-3 control-label">Nombre</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="reg_nombre" name="reg_nombre" class="form-control" ng-model="registroCliente.rNombres" />
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg_apellidos" class="col-sm-3 control-label">Apellidos</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="reg_apellidos" name="reg_apellidos" class="form-control" ng-model="registroCliente.rApellidos" />
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg_celular" class="col-sm-3 control-label">Celular</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="reg_celular" name="reg_celular" class="form-control" ng-model="registroCliente.rTelefono" />
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="reg_password" class="col-sm-3 control-label">Contraseña</label>
+                            <div class="col-sm-8">
+                                <input type="password" id="reg_password" name="reg_password" class="form-control" ng-model="registroCliente.rPassword" />
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="container">
+                            <div class="row flex-parent">
+                                <div class="col-sm-1 flex-child">
+                                    <span class="glyphicon glyphicon glyphicon-home fa-2x modal-titulo-icon"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                    <span class="titulo-modal">Mi dirección</span>
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+         
+                        <div class="form-group">
+                            <label for="reg_sector" class="col-sm-3 control-label">Sector</label>
+                            <div class="col-sm-8">
+                                <select class="form-control" name="reg_sector" id="reg_sector" ng-model="registroCliente.rSector" required>
+                                  <option ng-repeat="data in registroCliente.sectores" value="{{data.id}}">{{data.descripcion}}</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg_password" class="col-sm-3 control-label">Calle</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="reg_password" name="reg_dir_nombre" class="form-control" ng-model="registroCliente.rDirCalle" />
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg_dir_num" class="col-sm-3 control-label">Número</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="reg_dir_num" name="reg_dir_num" class="form-control" ng-model="registroCliente.rDirNumero" />
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="reg_password" class="col-sm-3 control-label">Block/ Depto</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="reg_dir_detalle" name="reg_dir_detalle" class="form-control" ng-model="registroCliente.rDirDetalle" />
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>                                
+
+                    </div>
+                </div>
+                <div class="row flex-parent padding-fila-btn">
+                    <div class="container">
+                        <div class="col-md-6 "></div>
+                        <div class="col-md-3 ">
+                            <input type="submit" value="Registrarme" ng-disabled="!formRegistroCliente.$valid" class="btn btn-primary btn-lg" /> 
+                        </div>
+                        <div class="col-md-3 ">
+                            <button style="margin-left:10px;" class="btn btn-danger boton-modal  btn-lg"  type="button" ng-click="cancelar()">CANCELAR</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="confirmarPedido.html" >
+    <div class="container-fluid menu-section container-modal borde-modal">
+        <div class="container" style="margin-top:15px;margin-left:15px;">
+            <div class="row flex-parent">
+                <div class="col-sm-1 flex-child">
+                    <span class="glyphicon glyphicon glyphicon-home fa-2x modal-titulo-icon"></span>
+                </div>
+                <div class="col-sm-6">
+                   <span class="titulo-modal">Dirección de despacho</span>
+                </div>
+            </div>
+        </div>   
+        <div class="container-fluid">
+            <div class="row padding-top-row-modal" >
+                <div class="col-md-6">
+                    <div class="container">
+                        <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"> <h3>Seleccionar dirección</h3> </div></div>
+                    </div>
+                    <div class="container-fluid">
+                    <div class="row " >
+                        <div class="col-md-12">
+                            <div class="quiz" id="quiz" data-toggle="buttons">
+                                <label class="element-animation1 btn btn-lg btn-primary btn-block botonradio" ng-repeat="p in data.comprador.direccion" ng-click="seleccionarDireccion(p.id)"><span class="btn-label"><i class="glyphicon glyphicon-chevron-right"></i></span> <input type="radio" name="q_answer" value="{{p.id}}">{{p.descripcion}} 
+                                </label>
+                           </div>
+                           <br>
+                           <button type="button" ng-disabled="!data.seleccionDir" class="btn btn-secondary btn-lg btn-block" ng-click="submitCompra(data,0)">Seleccionar y finalizar</button>
+                        </div>
+                    </div>
+                    </div>
+                    
+                </div>
+                <div class="col-md-6 ">
+                    <div class="container">
+                        <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"> <h3>Agregar dirección</h3> </div></div>
+                    </div>
+                
+                    <div class="">
+                        <div class="container-fluid">
+                            <form class="form-horizontal" ng-submit="submitCompra(data,1)" role="form" name="formNuevaDireccion">
+                                <div class="container-fluid">
+                                    <div class="row" >
+                                        <div class="col-md-12 ">
+                                            <div class="form-group">
+                                                <label for="dirSector" class="col-sm-3 control-label">Sector</label>
+                                                <div class="col-sm-9">
+                                                    <select class="form-control" name="dirSector" id="dirSector" ng-model="clienteDireccion.cSector" required>
+                                                      <option ng-repeat="data in registroCliente.sectores" value="{{data.id}}">{{data.descripcion}}</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="dirCalle" class="col-sm-3 control-label">Calle</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" id="dirCalle" name="dirCalle" class="form-control" ng-model="clienteDireccion.cDirCalle" />
+                                                </div>
+                                                <div class="col-sm-1"></div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="dirNumero" class="col-sm-3 control-label">Número</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" id="dirNumero" name="dirNumero" class="form-control" ng-model="clienteDireccion.cDirNumero" />
+                                                </div>
+                                                <div class="col-sm-1"></div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="dirDetalle" class="col-sm-3 control-label">Block/ Depto</label>
+                                                <div class="col-sm-9">
+                                                    <input type="text" id="dirDetalle" name="dirDetalle" class="form-control" ng-model="clienteDireccion.cDirDetalle" />
+                                                </div>
+                                                <div class="col-sm-1"></div>
+                                            </div>    
+
+                                            <br>
+                                            <input type="submit" value="Guardar y finalizar" ng-disabled="!formNuevaDireccion.$valid" class="btn btn-secondary btn-lg btn-block" />                      
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+        <button class="btn btn-danger btn-lg btn-block"  type="button" ng-click="cancelar()">CANCELAR</button>
+        </div>
+        <br>
+    </div>
+</script>
+
+
+<script type="text/ng-template" id="confirmarDireccion.html" >
+   <div class="container-fluid menu-section container-modal borde-modal">
+       <form class="form-horizontal" ng-submit="editarPerfil()" role="form" name="formEditarPerfil">
+            <div class="container-fluid">
+                <div class="row padding-top-row-modal" >
+                <div class="col-md-1 "></div>
+                    <div class="col-md-5 ">
+                        <div class="container">
+                            <div class="row flex-parent">
+                                <div class="col-sm-1 flex-child">
+                                    <span class="glyphicon glyphicon glyphicon-user fa-2x modal-titulo-icon"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                   <span class="titulo-modal">Mis datos</span>
+                                </div>
+                            </div>
+                            <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"></div></div>
+                        </div>
+                        <br>
+                        <div class="form-group">
+                            <label for="email"  class="col-sm-3 control-label">Correo electrónico</label>
+                            <div class="col-sm-8">
+                                <input type="email" id="email" disabled name="email" class="form-control" ng-model="email" required/>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="nombre" class="col-sm-3 control-label">Nombre</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="nombre" name="nombre" class="form-control" ng-model="nombre" required/>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="apellido" class="col-sm-3 control-label">Apellidos</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="apellido" name="apellido" class="form-control" ng-model="apellido" required/>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="telefono" class="col-sm-3 control-label">Celular</label>
+                            <div class="col-sm-8">
+                                <input type="text" id="telefono" name="telefono" class="form-control" ng-model="telefono" required/>
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                        <br><br>
+                        <div class="form-group">
+                            <div class="col-sm-3"></div>
+                            <div class="col-sm-8">
+                               <input type="submit" value="Guardar cambios" ng-disabled="!formEditarPerfil.$valid" class="btn btn-primary btn-lg btn-block" /> 
+                            </div>
+                            <div class="col-sm-1"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 ">
+                        <div class="container">
+                            <div class="row flex-parent">
+                                <div class="col-sm-1 flex-child">
+                                    <span class="glyphicon glyphicon glyphicon-home fa-2x modal-titulo-icon"></span>
+                                </div>
+                                <div class="col-sm-6">
+                                   <span class="titulo-modal">Mis direcciones</span>
+                                </div>
+                            </div>
+                            <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"></div></div>
+                        </div>
+                        <br>
+                        <div class="modal-personalizado">
+                            <div class="container-fluid">
+                                <div class="quiz row" ng-repeat="direccion in direcciones" id="quiz" >
+                                    <div class="container-fluid" style="margin-bottom:15px">
+                                        <div class="col-md-11 quiz" data-toggle="buttons"> 
+                                            <label class="element-animation1 btn btndelete btn-lg btn-secondary btn-block" ng-click="eliminar(direccion.id)"><span class="btn-label"><i class="glyphicon glyphicon-trash"></i></span>
+                                            <input type="radio"  name="q_answer" value="1">{{direccion.descripcion}}</label>
+                                        </div>
+                                         
+                                    </div>
+                                </div>
+
+                                <br><br>
+                                <div class="form-group">
+                                    <div class="col-md-11">
+                                        <button class="btn btn-md btn-success btn-block" type="button" ng-click="nuevaDireccion()">
+                                            <h3>Agregar dirección</h3>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </form>  
+    </div>
+</script>

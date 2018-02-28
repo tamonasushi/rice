@@ -1,0 +1,46 @@
+<?php $app = Zend_Registry::get("appData"); ?>
+
+<div ng-controller="IndexCrtl" id="hero" class="hero-section">
+    <div class="content-wrapper">
+        <div class="container text-center">
+            <div class="branding">
+                <div class="script script-white">Bienvenidos a </div>
+                <h1 class="logo text-center">
+                    
+                    <span class="border border-l"></span>
+                    <span class="text"><?php echo $app["name"] ?></span>
+                    <span class="border border-r"></span>
+                </h1>
+                <div class="tagline text-center">
+                    <ul class="list center-block">
+                        <!-- <li class="type">Sushi bar</li>
+                        <li role="presentation" class="dot"><i class="fa fa-circle"></i></li> -->
+                        <li class="type">Delivery</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h2 class="promo-line">
+                El mejor sushi de la ciudad!
+            </h2>
+            <div class="cta-container">
+                <a href="/index/menu">
+                    <button type="button" class="btn btn-primary" >Haz un pedido! </button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-slider-wrapper">
+        <div id="bg-slider" class="flexslider bg-slider">
+            <ul class="slides">
+                <li class="slide slide-1"></li>
+                <li class="slide slide-2"></li>
+                <li class="slide slide-3"></li>
+            </ul>
+        </div>
+    </div>
+    <!--//bg-slider-wrapper-->
+</div>
+
+

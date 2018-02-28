@@ -1,0 +1,148 @@
+<div class="menu-section" ng-controller="IngresoCrtl" >   
+    <div class="container-fluid">
+        <div class="row padding-top-row-modal" >
+            <div class="col-md-1 "></div>
+            <div class="col-md-5 ">
+                <div class="container">
+                    <div class="row flex-parent">
+                        <div class="col-sm-1 flex-child"></div>
+                        <div class="col-sm-6">
+                           <span class="titulo-modal">Ya soy cliente</span>
+                        </div>
+                    </div>
+                    <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"></div></div>
+                </div>
+                <br>
+                <form class="form-horizontal" ng-submit="loginForm()" role="form" name="formIngresoCliente">
+                    <div class="form-group">
+                        <label for="email"  class="col-sm-3 control-label">Correo electrónico</label>
+                        <div class="col-sm-8">
+                            <input type="email" id="nu_email" name="nu_email" class="form-control" ng-model="rcLoginCliente.loginEmail" required />
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="nombre" class="col-sm-3 control-label">Contraseña</label>
+                        <div class="col-sm-8">
+                            <input type="password" id="nu_password" name="nu_password" class="form-control" ng-model="rcLoginCliente.loginPassword" required />
+                        </div>
+                        <div class="col-sm-1"></div>
+                    </div>
+
+                <br><br>
+                <div class="form-group">
+                    <div class="col-sm-3"></div>
+                    <div class="col-sm-8">
+                       <input type="submit" value="Ingresar" ng-disabled="!formIngresoCliente.$valid" class="btn btn-primary btn-lg btn-block" /> 
+                    </div>
+                    <div class="col-sm-1"></div>
+                </div>
+                </form>
+            </div>
+            <div class="col-md-6 ">
+                <div class="container">
+                    <div class="row flex-parent">
+                        <div class="col-sm-1 flex-child"></div>
+                        <div class="col-sm-6">
+                           <span class="titulo-modal">Quiero registrarme</span> <small style="font-size: medium;margin-left:10px;">(Paso {{registroCliente.paso}} de 2)</small>
+                        </div>
+                    </div>
+                    <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"></div></div>
+                </div>
+                <br>
+                <div class="modal-personalizado">
+                    <div ng-if="registroCliente.paso == 1">
+                        <form class="form-horizontal"  role="form" name="formRegistroClienteP1">
+                            <div class="container-fluid">
+                                <div class="form-group">
+                                    <label for="email"  class="col-sm-3 control-label">Correo electrónico</label>
+                                    <div class="col-sm-8">
+                                        <input type="email" id="email" name="email" class="form-control" ng-model="registroCliente.rEmail" required/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nombre" class="col-sm-3 control-label">Contraseña</label>
+                                    <div class="col-sm-8">
+                                        <input type="password" id="nu_password" name="nu_password" class="form-control" ng-model="registroCliente.rPassword" required />
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="nombre" class="col-sm-3 control-label">Nombre</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="nombre" name="nombre" class="form-control" ng-model="registroCliente.rNombres" required/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="apellido" class="col-sm-3 control-label">Apellidos</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="apellido" name="apellido" class="form-control" ng-model="registroCliente.rApellidos" required/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="telefono" class="col-sm-3 control-label">Celular</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="telefono" name="telefono" class="form-control" ng-model="registroCliente.rTelefono" required/>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-8">
+                                        <button type="button" value="Siguiente" ng-disabled="!formRegistroClienteP1.$valid" class="btn btn-primary btn-lg btn-block" ng-click="pasoSiguiente()">Siguiente</button>
+                                    </div>
+                                    <div class="col-sm-1"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+    
+                    <div ng-if="registroCliente.paso == 2">
+                        <form class="form-horizontal" ng-submit="registroForm()" role="form" name="formRegistroClienteP2">
+                            <div class="form-group">
+                                <label for="dirSector" class="col-sm-3 control-label">Sector</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" name="dirSector" id="dirSector" ng-model="registroCliente.rSector" required>
+                                      <option ng-repeat="data in registroCliente.sectores" value="{{data.id}}">{{data.descripcion}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dirCalle" class="col-sm-3 control-label">Calle</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="dirCalle" name="dirCalle" class="form-control" ng-model="registroCliente.rDirCalle" />
+                                </div>
+                                <div class="col-sm-1"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dirNumero" class="col-sm-3 control-label">Número</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="dirNumero" name="dirNumero" class="form-control" ng-model="registroCliente.rDirNumero" />
+                                </div>
+                                <div class="col-sm-1"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="dirDetalle" class="col-sm-3 control-label">Block/ Depto</label>
+                                <div class="col-sm-8">
+                                    <input type="text" id="dirDetalle" name="dirDetalle" class="form-control" ng-model="registroCliente.rDirDetalle" />
+                                </div>
+                                <div class="col-sm-1"></div>
+                            </div>
+                            <br><br>
+                            <div class="form-group">
+                                <div class="col-sm-3"></div>
+                                <div class="col-sm-8">
+                                   <input type="submit" value="Guardar cambios" ng-disabled="!formRegistroClienteP2.$valid" class="btn btn-primary btn-lg btn-block" /> 
+                                </div>
+                                <div class="col-sm-1"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

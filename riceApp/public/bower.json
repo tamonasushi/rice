@@ -1,0 +1,29 @@
+{
+  "name": "bower-rice",
+  "authors": [
+    "vllanten <victor.llanten@gmail.com>"
+  ],
+  "description": "Listado de dependencias proyecto rice",
+  "main": "",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-resource": "1.6.5",
+    "angular": "1.6.5",
+    "angular-loading-bar": "^0.9.0",
+    "ng-table-bundle": "~3",
+    "angular-animate": "1.6.5",
+    "angular-bootstrap": "^2.5.0",
+    "ng-file-upload": "^12.2.13",
+    "material-icons": "^0.1.0",
+    "angular-multi-step-form": "^1.3.0"
+  },
+  "private": true
+}

@@ -1,0 +1,11 @@
+{
+    "require": {
+        "illuminate/database": "5.4",
+        "zendframework/zendframework1": "1.12"
+    },
+    "autoload" : {
+		"classmap" : [
+			"application/models/Eloquent"
+		]
+    }
+}

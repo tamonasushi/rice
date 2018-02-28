@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configdata>
+	<nav>
+		<tablero>
+			<label>Tablero de control</label>
+			<uri>#</uri>
+			<id>tablero</id>
+			<icon>fa fa-lg fa-fw fa-home </icon>
+			<resource>/default/admin</resource>
+				<pages>
+					<maquinas>
+						<label>Estadisticas</label>
+						<uri>/admin/estadistica</uri>
+						<resource>/default/admin/estadistica</resource>
+					</maquinas>
+				</pages>
+		</tablero>
+		<pedidos>
+			<icon> fa fa-lg fa-fw fa-shopping-cart </icon>
+			<label>Pedidos</label>
+			<uri>#</uri>
+			<id>pedidos</id>
+			<resource>/default/admin</resource>
+				<pages>
+					<ordenes>
+						<label>Ordenes</label>
+						<uri>/admin/ordenes</uri>
+						<resource>/default/admin/ordenes</resource>
+					</ordenes>
+					<reportes>
+						<label>Reportes</label>
+						<uri>/admin/reportes</uri>
+						<resource>/default/admin/reportes</resource>
+					</reportes>
+				</pages>
+		</pedidos>
+		<administracion>
+			<icon> fa fa-lg fa-fw fa-desktop </icon>
+			<label>Administracion</label>
+			<uri>#</uri>
+			<id>administracion</id>
+			<resource>/default/admin</resource>
+				<pages>
+					<categorias>
+						<label>Categorias</label>
+						<uri>/admin/categorias</uri>
+						<resource>/default/admin/categorias</resource>
+					</categorias>
+					<especificaciones>
+						<label>Especificaciones</label>
+						<uri>/admin/especificaciones</uri>
+						<resource>/default/admin/especificaciones</resource>
+					</especificaciones>
+					<productos>
+						<label>Productos</label>
+						<uri>/admin/productos</uri>
+						<resource>/default/admin/productos</resource>
+					</productos>
+					<sectores>
+						<label>Sectores</label>
+						<uri>/admin/sectores</uri>
+						<resource>/default/admin/sectores</resource>
+					</sectores>
+				</pages>
+		</administracion>
+	</nav>
+</configdata>

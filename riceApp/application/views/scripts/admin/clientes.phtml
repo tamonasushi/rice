@@ -1,0 +1,20 @@
+<div ng-controller="ClientesCrtl">
+	<article class="col-xs-12 col-sm-12 col-md-12 col-lg-12 sortable-grid ui-sortable">
+		<div class="jarviswidget jarviswidget-color-darken jarviswidget-sortable" role="widget">
+			<header role="heading">
+				<span class="widget-icon"> <i class="fa fa-table"></i> </span>
+				<h2>Listado de clientes </h2>
+			</header>
+			<div role="content" class="contentTable">
+				<table ng-table="tableParams" class="table table-striped table-bordered table-hover dataTable no-footer" show-filter="true">
+					<tr ng-repeat="user in $data">
+						<td title="'Name'" filter="{ name: 'text'}" sortable="'name'">{{user.usuario.username}}</td>
+						<td title="'Acciones'" align="center">
+							<button class="btn btn-warning" title="Editar"  ng-click="editar(user.usuario.id)"> <i class="fa fa-edit"></i> </button>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</article>
+</div>

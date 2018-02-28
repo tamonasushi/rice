@@ -1,0 +1,55 @@
+<div class="menu-section" ng-controller="PedidosCrtl" >
+    <div class="container-fluid">
+        <div class="row padding-top-row-modal">
+            <div class="col-md-1 "></div>
+            <div class="col-md-10">
+                <div class="container">
+                    <div class="row flex-parent">
+                        <div class="col-sm-1 flex-child">
+                            <span class="glyphicon glyphicon-cutlery fa-2x modal-titulo-icon"></span> 
+                        </div>
+                        <div class="col-sm-6">
+                           <span class="titulo-modal">Mis compras</span>
+                        </div>
+                    </div>
+                    <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"></div></div>
+                </div>
+            </div>
+            <div class="col-md-1"></div>
+        </div>
+        <div class="row padding-top-row-modal" ng-if="!poseeCompras">
+            <div class="col-md-1 "></div>
+            <div class="col-md-10 ">
+                <h3> - No registra compras - </h3>
+            </div>
+            <div class="col-md-1 "></div>
+        </div>
+        <div class="row padding-top-row-modal " ng-repeat="compra in compras" ng-if="poseeCompras">
+            <div class="col-md-1 "></div>
+            <div class="col-md-10 borde-modal">
+                <div class="container">
+                    <div class="row flex-parent" style="margin-bottom:15px">
+                        <div class="col-sm-12"><h2> {{ preparaFecha(compra.fecha_creacion) | date : "dd-MM-yyyy HH:mm:ss"}} </h2></div>
+                    </div>
+                    <div class="row flex-parent">
+                        <div class="col-sm-1 flex-child">
+                        </div>
+                        <div class="col-sm-8">
+                           <ul class="list-group">
+                                <li ng-repeat="producto in compra.productos">
+                                   <h3 ng-if="producto.cantidad == 1 "> {{producto.producto.nombre}} (1 unidad)</h3>
+                                   <h3 ng-if="producto.cantidad != 1 "> {{producto.producto.nombre}} ({{producto.cantidad}} unidades)</h3>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-sm-1 flex-child"></div>
+                        <div class="col-sm-1 flex-child"><h1>{{compra.total | currency:"$":0}}</h1> </div>
+                        <div class="col-sm-1 flex-child"></div>
+                    </div>
+                </div>  
+            </div>
+            
+            <div class="col-md-1 "></div>
+        </div>
+    </div>
+</div>

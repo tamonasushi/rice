@@ -1,0 +1,241 @@
+<?php $app = Zend_Registry::get("appData"); ?>
+<!DOCTYPE html>
+<!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
+<!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
+<!--[if !IE]><!-->
+<html lang="es-cl">
+<!--<![endif]-->
+
+<head>
+
+    <meta charset="utf-8">
+    <title> <?php echo $app["name"] ?> </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="<?php echo $app['favicon'] ?>" type="image/x-icon">
+    <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Dancing+Script:400,700' rel='stylesheet' type='text/css'>
+    <!-- Global CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/bootstrap.min.css">
+    <!-- Plugins CSS -->
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/font-awesome.min.css">
+		
+    <link rel="stylesheet" href="/epicure/flexslider.css">
+
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/smartadmin-production-plugins.min.css">
+    
+ 
+    <!-- Theme CSS -->
+    <link id="theme-style" rel="stylesheet" href="/epicure/styles.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/rice.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/css/quiz.css">
+    <?php  echo $this->headLink(); ?>
+</head>
+
+<body data-spy="scroll" >
+    <span ng-app="riceClient">
+        <header id="header" class="header navbar-fixed-top">
+            <div class="container" ng-controller="PaginaCrtl">
+                <nav class="main-nav" role="navigation">
+                    <div class="navbar-header text-center">
+                        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-collapse" style="float:left;">
+                            <span class="toggle-title">Menu</span>
+                            <span class="icon-bar-wrapper">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </span><!--//icon-bar-wrapper-->
+                        </button>
+                    </div>
+                    <div id="navbar-collapse" class="navbar-collapse collapse text-center">
+                        <ul class="nav navbar-nav center-block">
+                            <li class="nav-item"><a class="" href="/index/inicio">Inicio</a></li>
+                            <li class="nav-item"><a class="" href="/index/menu">Menu</a></li>
+                            <li class="nav-item"><a class="scrollto" href="/#contact">Contactanos</a></li>
+                            <li class="nav-item"><a class="scrollto" href="/#hours">Horario de atencion</a></li>
+                            <li class="nav-item" ng-if="!estadoUsuario.usuario"><a class="" href="/index/ingreso">Ingresar</a></li>
+                            <li class="nav-item" ng-if="estadoUsuario.usuario" uib-dropdown on-toggle="toggled(open)">
+                                <a id="simple-dropdown" uib-dropdown-toggle>{{estadoUsuario.nombreUsuario}}</a>
+                                  <ul class="dropdown-menu" uib-dropdown-menu aria-labelledby="simple-dropdown">
+                                    <li><a class="principal-opc" href="/index/mi-perfil">Mi perfil</a></li>
+
+                                    <li><a class="principal-opc" href="/index/mis-compras">Mis compras</a></li>
+                                    <li><a class="principal-opc" ng-click="logout()">Cerrar sesión</a></li>
+                                  </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </header>
+
+    
+        <?php echo $this->layout()->content; ?>
+    </span>
+
+    <div id="contact" class="contact-section">
+        <div class="container">
+            <h2 class="section-title text-center">
+                <span class="script">Contactanos</span>
+                <span class="title-text"></span>
+                <span class="title-border"></span>
+            </h2>
+            <div class="contact-content">
+                <div class="row">
+                    <div class="map-col col-xs-12 col-sm-6">
+                        <div id="map" class="map-container">
+                            <!--//You need to embed your own google map below-->
+                            <!--//Ref: https://support.google.com/maps/answer/144361?co=GENIE.Platform%3DDesktop&hl=en -->
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3328.99106249481!2d-70.65713138452973!3d-33.4495393807742!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x9662c508f9466cb5%3A0x40cade6a66ac3f1b!2sLord+Cochrane+209%2C+Santiago%2C+Regi%C3%B3n+Metropolitana!5e0!3m2!1ses-419!2scl!4v1503783266503" width="600" height="450" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+                        </div>
+                        <!--//map-->
+                    </div>
+                    <!--//map-col-->
+                    <div class="info-col col-xs-12 col-sm-6">
+                        <div class="row">
+                            <div class="col-xs-12 col-md-12">
+                                <div class="general">
+                                    <h4 class="title">Encuentranos en:</h4>
+                                    <div class="adr-group">
+                                        <span class="street-address">Lord cochrane 209</span><br>
+                                        <span class="city">Santiago</span><br>
+                                        <span class="country-name">Region metropolitana</span>
+                                    </div>
+                                    <div class="contact-methods">
+                                        <h5 class="subtitle">Contactanos</h5>
+                                        <ul class="list-unstyled">
+                                            <li><i class="fa fa-envelope-o"></i> <a href="index.html#">contacto@sushi.cl</a></li>
+                                            <li><i class="fa fa-phone"></i> <a href="tel:75581060">75581060</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <!--//general-->
+                            </div>
+
+                        </div>
+                        <!--//row-->
+                    </div>
+                    <!--//info-col-->
+                </div>
+                <!--//row-->
+            </div>
+            <!--//contact-content-->
+        </div>
+        <!--//container-->
+    </div>
+    <!--//contact-section-->
+
+
+    <!-- ******FOOTER****** -->
+    <footer  id="hours" class="footer">
+        <div class="footer-content">
+            <div class="container">
+                <div class="row">
+                    <div class="footer-col col-xs-12 col-sm-3">
+                        <div class="footer-col-inner">
+                            <h3 class="title">Horario de atencion:</h3>
+                            <ul class="list-unstyled">
+                                <li><span>Martes - Viernes:</span> 08:00 - 22:30</li>
+                                <li><span>Sabados:</span> 09:00 - 23:00</li>
+                                <li><span>Domingos:</span> 09:00 - 22:30</li>
+                            </ul>
+                        </div>
+                        <!--//footer-col-inner-->
+                    </div>
+
+                    <!--//foooter-col-->
+                    <div class="footer-col col-xs-12 col-sm-3">
+                        <div class="footer-col-inner">
+                            <h3 class="title">Siguenos</h3>
+                            <ul class="social-icons list-inline">
+                                <li><a href="https://twitter.com/3rdwave_themes" target="_blank"><i class="fa fa-twitter"></i></a></li>
+                                <li><a href="https://www.facebook.com/3rdwavethemes" target="_blank"><i class="fa fa-facebook"></i></a></li>
+                                <li><a href="index.html#"><i class="fa fa-google-plus"></i></a></li>
+                                <li><a href="index.html#"><i class="fa fa-instagram"></i></a></li>
+                                <li class="last"><a href="index.html#"><i class="fa fa-pinterest"></i></a></li>
+                            </ul>
+                        </div>
+                        <!--//footer-col-inner-->
+                    </div>
+                    <!--//foooter-col-->
+                </div>
+            </div>
+        </div>
+
+    </footer>
+    <!--//footer-->
+
+    <!-- Main Javascript -->
+		
+		<script>
+			if (!window.jQuery) {
+				document.write('<script src="/js/libs/jquery-2.1.1.min.js"><\/script>');
+			}
+		</script>
+
+		<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>
+		<script>
+			if (!window.jQuery.ui) {
+				document.write('<script src="/js/libs/jquery-ui-1.10.3.min.js"><\/script>');
+			}
+		</script>
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/epicure/jquery.scrollTo.min.js"></script>
+    <script type="text/javascript" src="/epicure/back-to-top.js"></script>
+    <script type="text/javascript" src="/epicure/jquery.placeholder.js"></script>
+    <script type="text/javascript" src="/epicure/jquery.flexslider-min.js"></script>
+    <script src="/js/notification/SmartNotification.min.js"></script>
+
+    <!--//form related JS -->
+    <script type="text/javascript" src="/epicure/moment.min.js"></script>
+    <script type="text/javascript" src="/epicure/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript" src="/epicure/jquery.validate.min.js"></script>
+
+    <!--//Image Gallery related JS -->
+    <script type="text/javascript" src="/epicure/jquery.blueimp-gallery.min.js"></script>
+    <script type="text/javascript" src="/epicure/bootstrap-image-gallery.min.js"></script>
+
+    <!-- Form iOS fix -->
+    <script type="text/javascript" src="/epicure/isMobile.min.js"></script>
+    <script type="text/javascript" src="/epicure/form-mobile-fix.js"></script>
+
+    <!--//Ajax Form */-->
+    <script type="text/javascript" src="/epicure/ajax-form.js"></script>
+
+    <script type="text/javascript" src="/epicure/main.js"></script>
+
+    <!-- Style Switcher (REMOVE ON YOUR PRODUCTION SITE) -->
+    <script src="/epicure/style-switcher.js"></script>
+   
+    <script src="/bower_components/angular/angular.min.js"></script>
+    <script src="/bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="/bower_components/angular-animate/angular-animate.min.js"></script>
+    
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" media="screen" href="/bower_components/angular-loading-bar/build/loading-bar.min.css">
+    <script src="/bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+
+    <link rel="stylesheet" href="/bower_components/ng-table-bundle/ng-table.min.css">
+    <script src="/bower_components/ng-table-bundle/ng-table.min.js"></script>
+
+    <script src="/bower_components/ng-file-upload/ng-file-upload.min.js"></script>
+
+    <?php  echo $this->headScript(); ?>
+
+
+    <div class="logoEntidad hidden-xs">
+        <a href="/" >
+            <img class="logoEntidad" src="/img/logos/tamona.png" alt="<?php echo $app["name"] ?>">
+        </a>
+    </div>
+       
+</body>
+
+</html>

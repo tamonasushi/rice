@@ -1,0 +1,151 @@
+#loadingHTTP {
+    pointer-events: all;
+    z-index: 99999;
+    border: none;
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    height: 100%;
+    top: 0px;
+    left: 0px;
+    cursor: wait;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.spinnerCenterLoad {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.contentTable {
+    padding: 25px !important;
+}
+
+.flex-parent{
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.flex-child{
+  display: -ms-flex;
+  display: -webkit-flex;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.vertical-modal-box{
+    border: 1px solid #F2F7F9;
+}
+
+.dividir-vertical-r{
+    border-right: 1px solid #F2F7F9;
+    height: 100% !important;
+}
+
+
+
+.container-modal{
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+    height: 100%;
+}
+span.titulo-modal {
+  font-family: sans-serif !important;
+  font-size: 250% !important;
+  color: #d4d2d2;
+}
+
+.modal-titulo-icon {
+  color: #d4d2d2;
+}
+
+
+.modal-personalizado{
+    margin-bottom:30px;
+    padding-bottom: 50px;
+
+}
+
+.app-modal-window .modal-dialog {
+  /*width: 70%;*/
+}
+
+.el2 {
+    background-color: rgba(0, 0, 0, 0.85) !important;
+}
+
+select.form-control2 {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+.padding-fila-btn{
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+}
+
+.padding-top-row-modal {
+    padding-top: 30px !important;   
+}
+
+.padding-top-botnera-modal {
+    padding-top: 20px !important;   
+}
+
+.fa-btn-size{
+  font-size: 12px;
+}
+
+.borde-modal {
+  border: 1px solid rgba(91, 95, 103, 1);
+}
+
+span.cantidad {
+ font: 150% sans-serif;
+ font-weight:bold;
+ margin: 5px;
+}
+
+div .columna-lista-modal{
+  /*padding-top: 5px;*/
+}
+
+.botonradio {
+  font-size: 13px !important;
+}
+
+ul.dropdown-menu{
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
+a.principal-opc{
+  color: #BDBDBD !important;
+}
+
+
+.nav .open>a, .nav .open>a:focus, .nav .open>a:hover{
+  background-color:rgba(0, 0, 0, 0.8) !important;
+ }
+
+a.principal-opc:hover {
+  color:#fff !important;
+  font-size: 13px !important;
+  font:bold !important;
+  background-color:rgba(0, 0, 0, 0.8) !important;
+  cursor:pointer !important;
+  /*
+  background-image:url(../Neweb/Sources/Img/btna.png);
+  background-repeat:no-repeat;
+  height:27px;
+  width:114px;
+  padding-top:15px;
+  padding-left:25px;
+  color:#fff;
+  font:bold 14px georgia;
+  line-height: 1.3em;
+  display:block;
+  */
+}
