@@ -28,7 +28,7 @@ app.factory('rcLoginCliente', ["rcPersonaUsuario", "registroCliente", "$uibModal
 
 app.controller("IndexCrtl", ["$scope", "rcClientIndex", "$uibModal", "rcCarrito", IndexCrtl]);
 
-app.controller("MenuCrtl", ["$scope", "rcLoginCliente", "rcClientIndex", "$uibModal", "rcPersonaUsuario","rcCarrito", MenuCrtl]);
+app.controller("MenuCrtl", ["$scope", "rcLoginCliente", "rcClientIndex", "$uibModal", "rcPersonaUsuario","rcCarrito","MensajeSmallBox", MenuCrtl]);
 
 app.controller("ModalInstanceCrtl", ["$scope", "$uibModalInstance", "data", "$uibModal", "rcCarrito", "rcLoginCliente", "registroCliente","finalizarCompra","rcPersonaUsuario","MensajeSmallBox","clienteDireccion","rcCompra","estadoUsuario", ModalInstanceCrtl]);
 
@@ -37,6 +37,24 @@ app.controller("PerfilCrtl", ["$scope", "$uibModal", "MensajeSmallBox","rcPerson
 app.controller("PaginaCrtl", ["$scope", "$uibModal", "MensajeSmallBox","estadoUsuario", PaginaCrtl]);
 
 app.controller("PedidosCrtl", ["$scope", "$uibModal", "MensajeSmallBox", "rcCompra", PedidosCrtl]);
+
+app.filter("txtEstadoCompra", function(){
+    return function(estado){
+        if( estado != null ) {
+        	if (estado == 1) {
+        		return "Recibido"
+        	} else if( estado == 2) {
+        		return "En proceso"
+        	} else if( estado == 3) {
+        		return "Despachado"
+        	}
+        	else if( estado == 4) {
+        		return "Rechazado"
+        	}
+        } 
+        return "Fallido"
+    }
+});
 
 loadingBar = function(cfpLoadingBarProvider) {
   cfpLoadingBarProvider.includeSpinner = false;

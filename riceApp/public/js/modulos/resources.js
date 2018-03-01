@@ -476,6 +476,11 @@ rcCompra = function($resource) {
       method: 'post',
       isArray: false
     },
+    anular: {
+      url: '/index/anular-compra',
+      method: 'post',
+      isArray: false
+    },
     ingresar: {
       url: '/index/ingresar-compra',
       method: 'post',

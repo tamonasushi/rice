@@ -27,17 +27,28 @@
         <div class="row padding-top-row-modal " ng-repeat="compra in compras" ng-if="poseeCompras">
             <div class="col-md-1 "></div>
             <div class="col-md-10 borde-modal">
-                <div class="container">
+                
                     <div class="row flex-parent" style="margin-bottom:15px">
-                        <div class="col-sm-12"><h2> {{ preparaFecha(compra.fecha_creacion) | date : "dd-MM-yyyy HH:mm:ss"}} </h2></div>
+                        <div class="col-sm-10"><h2> {{ preparaFecha(compra.fecha_creacion) | date : "dd-MM-yyyy HH:mm:ss"}} </h2></div>
+                        <!--<span style="z-index:10;position:absolute;right:20%;top:0;">fdgfd</span> -->
+                        <!--<div class="col-sm-2"><h2><span class="label label-success">{{compra.estado | txtestadocompra}}</span></h2></div>-->
+                        <div class="col-sm-1">
+                            <h2>
+                                <span class="label label-primary" ng-if="compra.estado == 1">{{compra.estado | txtEstadoCompra}}</span>
+                                <span class="label label-success" ng-if="compra.estado == 2 || compra.estado == 3">{{compra.estado | txtEstadoCompra}}</span>
+                                <span class="label label-danger" ng-if="compra.estado > 3 || compra.estado < 1">{{compra.estado | txtEstadoCompra}}</span>
+                            </h2>
+                            <button class="btn btn-danger" ng-if="compra.estado == 1" type="button" ng-click="anularCompra(compra.id)"><span class="glyphicon glyphicon-ban-circle " > Anular</button>
+                        </div>
                     </div>
+                    
                     <div class="row flex-parent">
                         <div class="col-sm-1 flex-child">
                         </div>
-                        <div class="col-sm-8">
+                        <div class="col-sm-8" >
                            <ul class="list-group">
                                 <li ng-repeat="producto in compra.productos">
-                                   <h3 ng-if="producto.cantidad == 1 "> {{producto.producto.nombre}} (1 unidad)</h3>
+                                   <h3 class="txtListaProducto" ng-if="producto.cantidad == 1 "> {{producto.producto.nombre}} (1 unidad)</h3>
                                    <h3 ng-if="producto.cantidad != 1 "> {{producto.producto.nombre}} ({{producto.cantidad}} unidades)</h3>
                                 </li>
                             </ul>
@@ -46,7 +57,6 @@
                         <div class="col-sm-1 flex-child"><h1>{{compra.total | currency:"$":0}}</h1> </div>
                         <div class="col-sm-1 flex-child"></div>
                     </div>
-                </div>  
             </div>
             
             <div class="col-md-1 "></div>

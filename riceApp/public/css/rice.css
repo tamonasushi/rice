@@ -149,3 +149,12 @@ a.principal-opc:hover {
   display:block;
   */
 }
+
+h3.txtListaProducto {
+  font-size: 16px !important;
+  color:#c9cbd0 !important;
+}
+
+.price-text{
+  font-size: 38px !important;
+}

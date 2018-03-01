@@ -138,7 +138,7 @@ class IndexController extends Rice_Controller_Action
      * [Action description]
      * @return [type] [description]
      */
-    public function getDataUsuarioAction(){
+    public function getDataUsuarioAction() {
         $success = false;
         $mensaje = "";
         $code = -1;
@@ -408,6 +408,7 @@ class IndexController extends Rice_Controller_Action
                             ->with("productos")
                             ->with("cliente")
                             ->with("direccion")
+                            ->where("estado","<>", Params::ESTADO_COMPRA_ANULADA)
                             ->orderBy('fecha_creacion', 'desc')
                             ->get();
             }
@@ -417,6 +418,26 @@ class IndexController extends Rice_Controller_Action
     }
 
 
+    public function anularCompraAction() {
+        $resp = array("success"=> false,"code" => -1);
+        try {
+            if( isset($this->dataPost["id_compra"]) ) {
+                $pedido = Pedido::find($this->dataPost["id_compra"]);
+                if( $pedido ) {
+                    $pedido->estado = Params::ESTADO_COMPRA_ANULADA;
+                    $pedido->save();
+                    $resp = array("success"=> true, "mensaje" => "Acción realizada con éxito","code" => 200);
+                } else {
+                    $resp['mensaje'] = "No se encontró el recurso";
+                }
+            } else {
+                $resp['mensaje'] = "Parámetros de envío erroneos";
+            }
+        } catch (Exception $e) { 
+            $resp['mensaje'] = "No se pudo resolver su peticion";
+        }
+        $this->_helper->json($resp);
+    }
 
         
     public function ingresarCompraAction() {
@@ -428,6 +449,7 @@ class IndexController extends Rice_Controller_Action
             if( isset($this->dataPost["data"]) ) {
                 $opcNuevaDireccion = ( isset($this->dataPost["opc_nueva"]) ) ? $this->dataPost["opc_nueva"] : 0 ;
                 $objEnvio = json_decode($this->dataPost["data"],true);
+
                 if( $opcNuevaDireccion > 0 ) {
                     if( isset($this->dataPost["sector"]) && isset($this->dataPost["dir_calle"]) && isset($this->dataPost["dir_numero"]) ) {
                         $datosUsuario = json_decode($this->dataPost["datosUsuario"]);
@@ -450,12 +472,12 @@ class IndexController extends Rice_Controller_Action
                         if( $id_direccion ) {
                             $montoTotal = 0;
                             $pedido = new Pedido;
-                            $pedido->observacion = "Sin observación";
                             $pedido->estado = Pedido::ESTADO_1_PENDIENTE;
                             $pedido->total = $montoTotal;
                             $pedido->id_direccion = $id_direccion; 
                             $pedido->creador = $id_usuario; 
                             $pedido->fecha_creacion = date('Y-m-d H:i:s');
+                            $pedido->observacion = ( $this->dataPost['observacion'] && $this->dataPost['observacion'] != "" ) ? $this->dataPost['observacion'] : "Sin observación";
                             $pedido->save();
 
                             $montoPedido = $this->calcularCostoPedido($objEnvio["resumen"],$pedido->id);
@@ -482,12 +504,13 @@ class IndexController extends Rice_Controller_Action
                         $montoTotal = 0;
                         $id_direccion = $this->dataPost["id_direccion"];
                         $pedido = new Pedido;
-                        $pedido->observacion = "Sin observación";
+
                         $pedido->estado = Pedido::ESTADO_1_PENDIENTE;
                         $pedido->total = $montoTotal;
                         $pedido->id_direccion = $id_direccion; 
                         $pedido->creador = $id_persona;
                         $pedido->fecha_creacion = date('Y-m-d H:i:s');
+                        $pedido->observacion = ( $this->dataPost['observacion'] && $this->dataPost['observacion'] != "" ) ? $this->dataPost['observacion'] : "Sin observación";
                         $pedido->save();
 
                         $montoPedido = $this->calcularCostoPedido($objEnvio["resumen"],$pedido->id);

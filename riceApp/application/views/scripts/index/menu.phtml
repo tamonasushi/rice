@@ -16,8 +16,9 @@
 
                             <div class="menus-section">
                             
-                                <div class="container text-center">
-                                    <div class="featured col-md-10">
+                                <div class="container text-center" style="width:100%">
+
+                                    <div class="featured col-md-12">
                                         <div style="padding-left: 0;" class="media-wrapper row">
                                             <div ng-if="productos[cat.id]">
                                                 <div class="col-xs-13 col-sm-4" ng-repeat="(key, pro) in productos[cat.id]">
@@ -28,7 +29,7 @@
                                                                 <span class="mask-inner">
                                                                     <span class="item-title script">{{pro.nombre}}</span>
                                                                     <span class="desc">{{pro.descripcion}}</span>
-                                                                    <span class="price">{{pro.valor | currency:"$":0 }}</span>
+                                                                    <span class="price price-text">{{pro.valor | currency:"$":0 }}</span>
                                                                 </span>
                                                             </a>
                                                         </div>
@@ -163,9 +164,12 @@
                     </div>
                 </div>
                 <div class="row flex-parent padding-fila-btn">
-                    <div class="col-md-6 "></div>
+                    <div class="col-md-3 "></div>
                     <div class="col-md-3 ">
-                        <button class="btn btn-primary btn-lg" type="button" ng-click="enviarPedido(data.seleccion)" ng-disabled="!rcCarrito.nElementsCarro || rcCarrito.nElementsCarro == 0"  >Continuar</button>
+                        <button class="btn btn-primary btn-lg" type="button" ng-click="vaciarCarro(data.seleccion)" ng-disabled="!rcCarrito.nElementsCarro || rcCarrito.nElementsCarro == 0" >Vaciar</button>
+                    </div>
+                    <div class="col-md-3 ">
+                        <button class="btn btn-primary btn-lg" type="button" ng-click="enviarComentario(data.seleccion)" ng-disabled="!rcCarrito.nElementsCarro || rcCarrito.nElementsCarro == 0"  > Continuar </button>
                     </div>
                     <div class="col-md-3 ">
                         <button class="btn btn-danger btn-lg btn-block" type="button" ng-click="cancelar()">CANCELAR</button>
@@ -348,6 +352,41 @@
     </div>
 </script>
 
+<script type="text/ng-template" id="agregarObservacion.html" >
+    <div class="container-fluid menu-section container-modal borde-modal">
+        <div class="container" style="margin-top:15px;margin-left:15px;">
+            <div class="row flex-parent">
+                <div class="col-sm-1 flex-child">
+                    <span class="glyphicon glyphicon-pencil fa-2x modal-titulo-icon"></span>
+                </div>
+                <div class="col-sm-6">
+                   <span class="titulo-modal">Observaciones</span>
+                </div>
+            </div>
+        </div>   
+        <div class="container-fluid">
+            <div class="row padding-top-row-modal" >
+                <div class="col-md-12">
+                    <div class="container">
+                        <div class="row flex-parent" style="margin-bottom:15px"><div class="col-sm-12"> <h3>Déjanos un comentario</h3> </div></div>
+                    </div>
+                    <div class="container-fluid">
+                    <div class="row " >
+                        <div class="col-md-12">
+                            <textarea class="form-control" rows="8" id="comment" ng-model="finalizarCompra.observacion"></textarea>
+                           <br>
+                           <button type="button" class="btn btn-secondary btn-lg btn-block" ng-click="enviarPedido(data.seleccion)">Continuar</button>
+                        </div>
+                    </div>
+                    </div>             
+                </div>
+            </div>
+            <br>
+        </div>
+        <br>
+    </div>
+</script>
+
 <script type="text/ng-template" id="confirmarPedido.html" >
     <div class="container-fluid menu-section container-modal borde-modal">
         <div class="container" style="margin-top:15px;margin-left:15px;">
@@ -440,7 +479,6 @@
         <br>
     </div>
 </script>
-
 
 <script type="text/ng-template" id="confirmarDireccion.html" >
    <div class="container-fluid menu-section container-modal borde-modal">

@@ -6,7 +6,7 @@ IndexCrtl = function($scope, rcClientIndex, $modal, rcCarrito) {
   return $scope.false;
 };
 
-MenuCrtl = function($scope,rcLoginCliente,rcClientIndex,$modal,rcPersonaUsuario,rcCarrito) {
+MenuCrtl = function($scope,rcLoginCliente,rcClientIndex,$modal,rcPersonaUsuario,rcCarrito, Msg) {
   var getCategorias, getProductos, getSectores,getEspecificaciones;
   $scope.categorias = {};
   $scope.productos = {};
@@ -31,6 +31,7 @@ MenuCrtl = function($scope,rcLoginCliente,rcClientIndex,$modal,rcPersonaUsuario,
       return $scope.categorias = r.data;
     });
   };
+
   getProductos = function() {
     return rcClientIndex.getProductos({}, function(r) {
       return $scope.productos = r.data;
@@ -96,8 +97,10 @@ MenuCrtl = function($scope,rcLoginCliente,rcClientIndex,$modal,rcPersonaUsuario,
     cantidad_productos++;
     localStorage.nElementsCarro = cantidad_productos;
     $scope.rcCarrito.precioTotal = localStorage.precioTotal;
+    Msg.Success("Producto agregado con éxito");
     return $scope.rcCarrito.nElementsCarro = cantidad_productos;
   };
+
   $scope.confirmarCompra = function() {
     var modalInstance;
     return modalInstance = $modal.open({
@@ -161,6 +164,7 @@ MenuCrtl = function($scope,rcLoginCliente,rcClientIndex,$modal,rcPersonaUsuario,
 
 ModalInstanceCrtl = function($scope,$modalInstance,data,$modal,rcCarrito,rcLoginCliente,registroCliente,finalizarCompra,rcPersonaUsuario,Msg,clienteDireccion,rcCompra,estadoUsuario) {
   $scope.data = data;
+  $scope.observacion = "";
   $scope.rcCarrito = rcCarrito;
   $scope.clienteDireccion = clienteDireccion;
   $scope.rcLoginCliente = rcLoginCliente;
@@ -193,7 +197,8 @@ ModalInstanceCrtl = function($scope,$modalInstance,data,$modal,rcCarrito,rcLogin
         dir_calle: $scope.clienteDireccion.cDirCalle,
         dir_numero: $scope.clienteDireccion.cDirNumero,
         dir_detalle: $scope.clienteDireccion.cDirDetalle,
-        datosUsuario: $scope.datosUsuario
+        datosUsuario: $scope.datosUsuario,
+        observacion: $scope.finalizarCompra.observacion
       }, function(r) {
         if (r.success === true) {
           clienteDireccion.limpiar();
@@ -205,6 +210,7 @@ ModalInstanceCrtl = function($scope,$modalInstance,data,$modal,rcCarrito,rcLogin
           $scope.rcCarrito.itemsCarro = {};
           $scope.rcCarrito.nElementsCarro = 0; 
           $scope.rcCarrito.precioTotal = 0;
+          $scope.finalizarCompra.observacion = "";
           
           $modalInstance.close(r);
           Msg.Success(r.mensaje);
@@ -224,7 +230,8 @@ ModalInstanceCrtl = function($scope,$modalInstance,data,$modal,rcCarrito,rcLogin
         id_direccion: $scope.finalizarCompra.idDireccion,
         data:$scope.finalizarCompra.objRespuesta,
         opc_nueva:$scope.finalizarCompra.opcNuevaDireccion,
-        datosUsuario: $scope.datosUsuario
+        datosUsuario: $scope.datosUsuario,
+        observacion: $scope.finalizarCompra.observacion
       }, function(r) {
         if (r.success === true) {
           localStorage.removeItem('nElementsCarro');
@@ -233,7 +240,7 @@ ModalInstanceCrtl = function($scope,$modalInstance,data,$modal,rcCarrito,rcLogin
           $scope.rcCarrito.itemsCarro = {};
           $scope.rcCarrito.nElementsCarro = 0; 
           $scope.rcCarrito.precioTotal = 0;
-          
+          $scope.finalizarCompra.observacion = "";
           $modalInstance.close(r);
           Msg.Success(r.mensaje);
           window.location = '/index/mis-compras';
@@ -249,10 +256,10 @@ ModalInstanceCrtl = function($scope,$modalInstance,data,$modal,rcCarrito,rcLogin
     }
   };
  
-  $scope.enviarPedido = function(responce) {
+  $scope.enviarPedido = function(response) {
     if( !localStorage.usuarioCliente ) {
       var modalInstance;
-      $modalInstance.close(responce);
+      $modalInstance.close(response);
       return modalInstance = $modal.open({
         templateUrl: 'formLoginCliente.html',
         controller: 'ModalInstanceCrtl',
@@ -269,7 +276,7 @@ ModalInstanceCrtl = function($scope,$modalInstance,data,$modal,rcCarrito,rcLogin
         }
       }).result.then(function(resultado) {}, function(close) {});
     } else {
-      $modalInstance.close(responce);
+      $modalInstance.close(response);
         return modalInstance = $modal.open({
           templateUrl: 'confirmarPedido.html',
           controller: 'ModalInstanceCrtl',
@@ -288,11 +295,52 @@ ModalInstanceCrtl = function($scope,$modalInstance,data,$modal,rcCarrito,rcLogin
         }).result.then(function(resultado) {}, function(close) {});
       alert("Ya está logueado");
     }
-    if (responce == null) {
-      responce = true;
+    if (response == null) {
+      response = true;
     }
-    return $modalInstance.close(responce);
+    return $modalInstance.close(response);
   };
+
+
+  $scope.enviarComentario = function(response) {
+    var modalInstance;
+    $modalInstance.close(response);
+    return modalInstance = $modal.open({
+      templateUrl: 'agregarObservacion.html',
+      controller: 'ModalInstanceCrtl',
+      windowClass: 'app-modal-window',
+      size: "lg",
+      backdrop: 'static',
+      resolve: {
+        data: function() {
+          return {
+            observacion: $scope.observacion
+          };
+        }
+      }
+    }).result.then(function(resultado) {}, function(close) {});
+   
+    if (response == null) {
+      response = true;
+    }
+    return $modalInstance.close(response);
+  };
+
+
+
+
+  $scope.vaciarCarro = function(response) {
+    localStorage.removeItem("itemsCarro");
+    localStorage.removeItem("nElementsCarro");
+    localStorage.removeItem("precioTotal");
+    $modalInstance.close(response);
+    $scope.rcCarrito.nElementsCarro = 0; 
+    $scope.rcCarrito.itemsCarro = ""; 
+    $scope.rcCarrito.precioTotal = 0;
+
+    //window.location = '/index/menu';
+    Msg.Success("El carro de compras ha sido vaciado");
+  }
 
   $scope.submitLoginForm = function() {
     return rcPersonaUsuario.getDataUsuario({
@@ -476,7 +524,7 @@ IngresoCrtl = function($scope, rcClientIndex, $modal, rcLoginCliente, registroCl
         $scope.estadoUsuario.usuario = true;
 
         Msg.Success(r.mensaje);
-        window.location = '/index/mi-perfil';
+        window.location = '/index/inicio';
         return $location.path('/index');
       } else {
         Msg.Error(r.mensaje);
@@ -766,6 +814,38 @@ PedidosCrtl = function($scope, $modal, Msg, rcCompra) {
       Msg.Info("Debes iniciar sesión para esto");
       window.location = '/index/ingreso';
     }     
+  };
+
+  $scope.anularCompra = function(id_compra) {
+    var modalInstance;
+    return modalInstance = $modal.open({
+      templateUrl: '/index/modal-confirmar',
+      controller: 'ModalInstanceCrtl',
+      size: "md",
+      backdrop: 'static',
+      resolve: {
+        data: function() {
+          return {};
+        }
+      }
+    }).result.then(function(resultado) {
+      return rcCompra.anular({
+        id_compra: id_compra
+      }, function(r) {
+        if (r.success === true) {
+          Msg.Success(r.mensaje);
+          window.location = '/index/mis-compras';
+        } else {
+          Msg.Error(r.mensaje);
+          window.location = '/index/mis-compras';
+        }
+      }, function(error) {
+        Msg.Error(r.mensaje);
+        window.location = '/index/mis-compras';
+      });
+    }, function(close) {
+      return Msg.Info("Accion cancelada");
+    });
   };
 
   $scope.preparaFecha = function(fecha) {
